@@ -24,6 +24,9 @@ body {
   background-color: #fff;
   color: #212121;
 }
+body.scroll-hidden {
+  overflow: hidden;
+}
 
 .gallery {
   display: grid;
