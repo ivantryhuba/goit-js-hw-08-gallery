@@ -59,8 +59,6 @@ function openModal(evt) {
   window.addEventListener('keydown', onPressEsc);
   lightboxOverlay.addEventListener('click', closeModal);
   closeBtn.addEventListener('click', closeModal);
-
-  console.log(evt.target.dataset.source);
 }
 
 // *Закрываем модалку
@@ -79,9 +77,37 @@ function closeModal(evt) {
 }
 
 // !Перелистывание по нажатию стрелок (Left-Right)
-function toThePrevious() {}
+// *Поиск индекса текущей картинки
+let indexCurrentElem;
+function findCurrentIndex() {
+  galleryList.forEach((elem, index) => {
+    if (elem.description === lightboxImg.getAttribute('alt')) {
+      return (indexCurrentElem = index);
+    }
+  });
+}
 
-function toTheNext() {}
+//Влево
+function toThePrevious() {
+  findCurrentIndex();
+  if (indexCurrentElem === 0) {
+    indexCurrentElem = galleryList.length;
+  }
+  lightboxImg.src = galleryList[indexCurrentElem - 1].original;
+  lightboxImg.alt = galleryList[indexCurrentElem - 1].description;
+  return lightboxImg;
+}
+
+//Вправо
+function toTheNext() {
+  findCurrentIndex();
+  if (indexCurrentElem === galleryList.length - 1) {
+    indexCurrentElem = -1;
+  }
+  lightboxImg.src = galleryList[indexCurrentElem + 1].original;
+  lightboxImg.alt = galleryList[indexCurrentElem + 1].description;
+  return lightboxImg;
+}
 
 // !Нажатие клавиш Left-Right (Для перелистывания)
 function onArrowLeft(evt) {
